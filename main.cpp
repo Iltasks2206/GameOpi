@@ -94,8 +94,25 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
         {
             string test;
             getline(cin, test);
+            if (test.size() >= 2) {
+                while (test[0] == ' ') test.erase(test.begin());
+                while (test.size() > 1 && test[test.size() - 1] == ' ') test.erase(test.end() - 1);
+            }
+            bool flag = false;
+            for (int i = 0; i < test.size(); i++) {
+                if (test[i] < '0' || test[i] > '9') {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag) {
+                wcout << L"Вы ввели что-то не понятное, введите номер буквы еще раз            ";
+                continue;
+            }
+
             int myint = stoi(test);
-            cout << myint << ' ' << test << "\n";
+            
             if (myint > 0 && myint <= ans.size()) {
                 a = myint;
                 break;
