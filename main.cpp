@@ -159,7 +159,7 @@ void PointsOnDrum(string& que, string& s,
     bool flag = false;
     do {
         if (flag) wcout << L"Я не расслышал. Повторите еще раз.\n";
-        wcout << L"БУКВА(Заглавная буква от А до Я)          ";
+        wcout << L"БУКВА                    ";
         cin.clear();
         getline(cin, u);
         if (u.size() >= 2) {
@@ -267,6 +267,5 @@ int main()
     }
 
     wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
-
     return 0;
 }
