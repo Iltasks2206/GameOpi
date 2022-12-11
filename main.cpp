@@ -136,7 +136,8 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
     }
     else {
         wcout << L"Открыть букву под номером " << a << "\n";
-        Letters[ans[a - 1] - 64] = true;
+        if (ans[a - 1] == int('Ё')) Letters[ans[a - 1] - 72] = true;
+        else Letters[ans[a - 1] - 64] = true;
         for (int i = 0; i < ans.size(); i++) {
             if (ans[i] == ans[a - 1]) {
                 s[i] = ans[i];
