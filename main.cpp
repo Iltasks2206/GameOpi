@@ -182,7 +182,6 @@ void PointsOnDrum(string& que, string& s,
             io = char(int(io) - 80);
         }
 
-        cout << int(io) << "\n";
     } while (('А' - 64 > io || io > 'Я' - 64) && int(io) - 72 != int('Ё'));
 
     if (Letters[io]) {
