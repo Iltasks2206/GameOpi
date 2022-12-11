@@ -193,7 +193,6 @@ void PointsOnDrum(string& que, string& s,
         int k = 0;
         bool f = false;
         for (int i = 0; i < ans.size(); i++) {
-            //cout << int(ans[i]) << ' ' << int(io) << ' ' << int('Ё') << "\n";
             if (ans[i] - 64 == io || ((ans[i] == int(io) - 72) && (int(io) - 72 == int('Ё')))) {
                 k++;
                 f = true;
