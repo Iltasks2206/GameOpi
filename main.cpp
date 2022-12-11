@@ -130,13 +130,13 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
 
     } while (true);
 
-    if (s[a - 1] != '_' || Letters[s[a - 1]]) {
+    if (s[a - 1] != '_' || Letters[ans[a - 1] - 64]) {
         wcout << L"Вы конечно умный! Такая буква уже открыта.\n";
         CurPlayer = (CurPlayer + 1) % 3;
     }
     else {
         wcout << L"Открыть букву под номером " << a << "\n";
-        Letters[s[a - 1]] = true;
+        Letters[ans[a - 1] - 64] = true;
         for (int i = 0; i < ans.size(); i++) {
             if (ans[i] == ans[a - 1]) {
                 s[i] = ans[i];
