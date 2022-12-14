@@ -81,7 +81,7 @@ wstring SpinDrum()
     return Points;
 }
 
-void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer) 
+void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
 {
     cout << que << "    ";
     for (auto i : s) cout << i << ' ';
@@ -112,7 +112,7 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
             }
 
             int myint = stoi(test);
-            
+
             if (myint > 0 && myint <= ans.size()) {
                 a = myint;
                 break;
@@ -214,9 +214,12 @@ void PointsOnDrum(string& que, string& s,
 
 }
 
+
 question ChoosingRandomQuestion(vector <question>& Questions)
 {
-    int NumOfQue = rand() % Questions.size();
+    int NumOfQue;
+    NumOfQue = rand() % Questions.size();
+
     string que = Questions[NumOfQue].que;
     string ans = Questions[NumOfQue].ans;
     Questions.erase(Questions.begin() + NumOfQue);
@@ -232,40 +235,74 @@ int main()
     vector <question> Questions = InputQuestionsFromTheTextFile();
     question RoundQue = ChoosingRandomQuestion(Questions);
     string que = RoundQue.que, ans = RoundQue.ans;
-    string s = str.substr(0, ans.size());
+    string s;
     vector <int> PlayersScore(3, 0);
     int CurPlayer = 0;
-    Print(que, s, PlayersScore);
+    //Print(que, s, PlayersScore);
+    string rep;
 
-    while (true) {
 
-        bool f = true;
-        for (char i : s) {
-            if (i == '_') {
-                f = false;
-                break;
+
+    do
+    {
+
+        fill(PlayersScore.begin(), PlayersScore.end(), 0);
+
+
+        RoundQue = ChoosingRandomQuestion(Questions);
+
+        que = RoundQue.que;
+
+        ans = RoundQue.ans;
+
+        CurPlayer = 0;
+
+        s = str.substr(0, ans.size());
+
+        Print(que, s, PlayersScore);
+
+        Letters.clear();
+        while (true) {
+
+            bool f = true;
+            for (char i : s) {
+                if (i == '_') {
+                    f = false;
+                    break;
+                }
             }
-        }
-        if (f) break;
+            if (f) break;
 
-        wstring Points = SpinDrum();
-        wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << Points;
-        pause();
+            wstring Points = SpinDrum();
+            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << Points;
+            //А нафига пауза, я так и не понял но оставлю
+            pause();
 
-        if (Points == L"переход хода") {
-            CurPlayer = (CurPlayer + 1) % 3;
-            continue;
-        }
-        else if (Points == L"+") {
-            PlusOnDrum(que, s, ans, CurPlayer);
-        }
-        else {
-            PointsOnDrum(que, s, ans, PlayersScore, CurPlayer, Points);
-            continue;
+            if (Points == L"переход хода") {
+                CurPlayer = (CurPlayer + 1) % 3;
+                continue;
+            }
+            else if (Points == L"+") {
+                PlusOnDrum(que, s, ans, CurPlayer);
+            }
+            else {
+                PointsOnDrum(que, s, ans, PlayersScore, CurPlayer, Points);
+                continue;
+            }
+
+
         }
 
-    }
+        wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
+        wcout << L"Если вы хотите начать новую игру введите 1\n";
+        getline(cin, rep);
 
-    wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
+        if (Questions.size() == 0 && rep == "1") {
+
+            wcout << L"Извините, вопросы закончились :(";
+            break;
+        }
+
+    } while (rep == "1");
     return 0;
 }
