@@ -294,7 +294,7 @@ int main()
         }
 
         wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
-        wcout << L"Если вы хотите начать новую игру введите 1\n";
+        wcout << L"Если вы хотите начать новую игру введите 1, иначе нажмите Enter\n";
         getline(cin, rep);
 
         if (Questions.size() == 0 && rep == "1") {
