@@ -28,12 +28,19 @@ struct question {
 
 };
 
+void pause()
+{
+    cin.clear();
+    while (cin.get() != '\n');
+}
+
 vector <question> InputQuestionsFromTheTextFile()
 {
     ifstream file("Questions.txt");
 
     if (!file.is_open()) {
         wcout << L"Ошибка открытия файла с вопросами!\n";
+        pause();
         exit(false);
     }
 
@@ -58,12 +65,6 @@ vector <question> InputQuestionsFromTheTextFile()
     file.close();
 
     return Questions;
-}
-
-void pause()
-{
-    cin.clear();
-    while (cin.get() != '\n');
 }
 
 void Print(string que, string s, const vector <int> PlayersScore)
@@ -238,7 +239,6 @@ int main()
     string s;
     vector <int> PlayersScore(3, 0);
     int CurPlayer = 0;
-    //Print(que, s, PlayersScore);
     string rep;
 
 
@@ -274,9 +274,9 @@ int main()
             if (f) break;
 
             wstring Points = SpinDrum();
-            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << Points;
-            //А нафига пауза, я так и не понял но оставлю
+            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока. Нажмите Enter, чтобы прокрутить барабан ";
             pause();
+            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << Points << "\n";
 
             if (Points == L"переход хода") {
                 CurPlayer = (CurPlayer + 1) % 3;
@@ -294,7 +294,7 @@ int main()
         }
 
         wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
-        wcout << L"Если вы хотите начать новую игру введите 1, иначе нажмите Enter\n";
+        wcout << L"Если вы хотите начать новую игру введите 1, иначе нажмите любую кнопку\n";
         getline(cin, rep);
 
         if (Questions.size() == 0 && rep == "1") {
@@ -303,6 +303,7 @@ int main()
             break;
         }
 
+        system("cls");
     } while (rep == "1");
     return 0;
 }
