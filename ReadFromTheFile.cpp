@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -11,8 +12,9 @@ size_t GetSizeOfFile(const std::wstring& path)
 
 std::wstring LoadUtf8FileToString(const std::wstring& filename)
 {
+
     // stores file contents
-    std::wstring buffer;            
+    std::wstring buffer;
     FILE* f = _wfopen(filename.c_str(), L"rtS, ccs=UTF-8");
 
     // Failed to open file
@@ -40,10 +42,11 @@ std::wstring LoadUtf8FileToString(const std::wstring& filename)
 }
 
 int main()
-{   
+{
     setlocale(LC_ALL, "Russian");
     std::wstring mytext = LoadUtf8FileToString(L"Questions.txt");
     std::wcout << mytext << "\n";
     std::cin.get();
     return 0;
+
 }
