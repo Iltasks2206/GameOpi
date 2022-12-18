@@ -2,11 +2,9 @@
 #include <vector>
 #include <stdexcept>
 #include <string>
-#include <math.h>
 #include <Windows.h>
 #include <map>
 #include <time.h>
-#include <limits.h>
 #include <fstream>
 
 using namespace std;
@@ -88,7 +86,7 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
     for (auto i : s) cout << i << ' ';
     cout << "\n";
 
-    wcout << L"Выбирите номер буквы, которую хотите открыть            ";
+    wcout << L"Выбирите номер буквы, которую хотите открыть:           ";
     int a;
     do {
         try
@@ -108,7 +106,7 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
             }
 
             if (flag) {
-                wcout << L"Вы ввели что-то не понятное, введите номер буквы еще раз            ";
+                wcout << L"Вы ввели что-то непонятное, введите номер буквы еще раз            ";
                 continue;
             }
 
@@ -119,20 +117,20 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
                 break;
             }
             else {
-                wcout << L"Вы ввели что-то не понятное, введите номер буквы еще раз            ";
+                wcout << L"Вы ввели что-то непонятное, введите номер буквы еще раз            ";
                 continue;
             }
         }
         catch (std::exception& e)
         {
-            wcout << L"Вы ввели что-то не понятное, введите номер буквы еще раз            ";
+            wcout << L"Вы ввели что-то непонятное, введите номер буквы еще раз            ";
             continue;
         }
 
     } while (true);
 
     if (s[a - 1] != '_' || Letters[ans[a - 1] - 64]) {
-        wcout << L"Вы конечно умный! Такая буква уже открыта.\n";
+        wcout << L"Вы, конечно, умный! Такая буква уже открыта.\n";
         CurPlayer = (CurPlayer + 1) % 3;
     }
     else {
@@ -187,7 +185,7 @@ void PointsOnDrum(string& que, string& s,
     } while (('А' - 64 > io || io > 'Я' - 64) && int(io) - 72 != int('Ё'));
 
     if (Letters[io]) {
-        wcout << L"Вы конечно умный! Такая буква уже была.\n";
+        wcout << L"Вы, конечно, умный! Такая буква уже была.\n";
         CurPlayer = (CurPlayer + 1) % 3;
     }
     else {
@@ -234,26 +232,35 @@ int main()
     setlocale(LC_ALL, "Russian");
 
     vector <question> Questions = InputQuestionsFromTheTextFile();
+<<<<<<< HEAD
     //question RoundQue;// = ChoosingRandomQuestion(Questions);
     //string que = RoundQue.que, ans = RoundQue.ans;
+=======
+>>>>>>> 2cf74df (Last)
     string s;
     vector <int> PlayersScore(3, 0);
     int CurPlayer = 0;
     string rep;
 
 
-
-    do
+    bool ContinueGame = true;
+    while(ContinueGame)
     {
-
+        system("cls");
+        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
         fill(PlayersScore.begin(), PlayersScore.end(), 0);
 
+<<<<<<< HEAD
 
         question RoundQue = ChoosingRandomQuestion(Questions);
 
         string que = RoundQue.que;
 
         string ans = RoundQue.ans;
+=======
+        question RoundQue = ChoosingRandomQuestion(Questions);
+        string que = RoundQue.que, ans = RoundQue.ans;
+>>>>>>> 2cf74df (Last)
 
         CurPlayer = 0;
 
@@ -274,36 +281,48 @@ int main()
             if (f) break;
 
             wstring Points = SpinDrum();
-            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока. Нажмите Enter, чтобы прокрутить барабан ";
+            wcout << CurPlayer + 1 << L"-ый игрок. Нажмите Enter, чтобы прокрутить барабан ";
             pause();
             wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << Points << "\n";
 
             if (Points == L"переход хода") {
                 CurPlayer = (CurPlayer + 1) % 3;
-                continue;
             }
             else if (Points == L"+") {
                 PlusOnDrum(que, s, ans, CurPlayer);
             }
             else {
                 PointsOnDrum(que, s, ans, PlayersScore, CurPlayer, Points);
-                continue;
             }
 
 
         }
 
-        wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
-        wcout << L"Если вы хотите начать новую игру введите 1, иначе нажмите любую кнопку\n";
-        getline(cin, rep);
-
-        if (Questions.size() == 0 && rep == "1") {
-
-            wcout << L"Извините, вопросы закончились :(";
-            break;
+        if (Questions.size() == 0) {
+            wcout << L"Новые вопросы закончились. Игра закончилась.\n";
+            wcout << L"Нажмите SHIFT, чтобы выйти из приложения.\n";
+            while (true)
+                if (GetAsyncKeyState(VK_SHIFT)) {
+                    exit(false);
+                }
         }
+        
+        wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
+        wcout << L"Если вы хотите начать новую игру нажмите TAB, иначе нажмите кнопку SHIFT, чтобы выйти из игры.\n";
 
-        system("cls");
-    } while (rep == "1");
+        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+        ContinueGame = false;
+        while (Questions.size() > 0)
+            if (GetAsyncKeyState(VK_TAB)) {
+                ContinueGame = true;
+                Sleep(150);
+                break;
+            }
+            else if (GetAsyncKeyState(VK_SHIFT)) {
+                exit(false);
+            }
+
+    }
+
     return 0;
 }
