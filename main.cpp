@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <string>
 #include <Windows.h>
+#include <cstdio>
 #include <map>
 #include <time.h>
 #include <fstream>
@@ -71,7 +72,9 @@ void Print(string que, string s, const vector <int> PlayersScore)
     for (auto i : s) cout << i << ' ';
     cout << "\n";
     wcout << L"Баланс игроков:        1 игрок         2 игрок         3 игрок\n";
-    cout << "                       " << PlayersScore[0] << "               " << PlayersScore[1] << "               " << PlayersScore[2] << "\n";
+    printf_s("                        %6d", PlayersScore[0]);
+    printf_s("          %6d", PlayersScore[1]);
+    printf_s("          %6d\n", PlayersScore[2]);
 }
 
 int SpinDrum()
@@ -154,7 +157,9 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer, const vecto
 
         if (PrintOfPlayersScore) {
             wcout << L"Баланс игроков:        1 игрок         2 игрок         3 игрок\n";
-            cout << "                       " << PlayersScore[0] << "               " << PlayersScore[1] << "               " << PlayersScore[2] << "\n";
+            printf_s("                        %6d", PlayersScore[0]);
+            printf_s("          %6d", PlayersScore[1]);
+            printf_s("          %6d\n", PlayersScore[2]);
         }
 
     }
