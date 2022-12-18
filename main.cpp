@@ -74,9 +74,9 @@ void Print(string que, string s, const vector <int> PlayersScore)
     cout << "                       " << PlayersScore[0] << "               " << PlayersScore[1] << "               " << PlayersScore[2] << "\n";
 }
 
-wstring SpinDrum()
+int SpinDrum()
 {
-    wstring Points = drum[rand() % 15];
+    int Points = rand() % 15;
     return Points;
 }
 
@@ -244,7 +244,7 @@ int main()
         system("cls");
         FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
         fill(PlayersScore.begin(), PlayersScore.end(), 0);
-        
+
         question RoundQue = ChoosingRandomQuestion(Questions);
         string que = RoundQue.que, ans = RoundQue.ans;
 
@@ -266,19 +266,24 @@ int main()
             }
             if (f) break;
 
-            wstring Points = SpinDrum();
+            int Points = SpinDrum();
             wcout << CurPlayer + 1 << L"-ый игрок. Нажмите Enter, чтобы прокрутить барабан ";
             pause();
-            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << Points << "\n";
+            wcout << L"Ход " << CurPlayer + 1 << L"-го игрока           " << OutputDrum << "               " << drum[Points] << "\n";
 
-            if (Points == L"переход хода") {
-                CurPlayer = (CurPlayer + 1) % 3;
-            }
-            else if (Points == L"+") {
-                PlusOnDrum(que, s, ans, CurPlayer);
-            }
-            else {
-                PointsOnDrum(que, s, ans, PlayersScore, CurPlayer, Points);
+            switch (Points) {
+
+                case 14:
+                    CurPlayer = (CurPlayer + 1) % 3;
+                    break;
+
+                case 13:
+                    PlusOnDrum(que, s, ans, CurPlayer);
+                    break;
+
+                default:
+                    PointsOnDrum(que, s, ans, PlayersScore, CurPlayer, drum[Points]);
+                    break;
             }
 
 
