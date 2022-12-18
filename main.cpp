@@ -228,7 +228,10 @@ question ChoosingRandomQuestion(vector <question>& Questions)
 
 int main()
 {
+    system("chcp 1251");
     srand((unsigned)time(NULL));
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
 
     vector <question> Questions = InputQuestionsFromTheTextFile();
@@ -241,6 +244,7 @@ int main()
     bool ContinueGame = true;
     while(ContinueGame)
     {
+
         system("cls");
         FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
         fill(PlayersScore.begin(), PlayersScore.end(), 0);
