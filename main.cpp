@@ -80,7 +80,7 @@ int SpinDrum()
     return Points;
 }
 
-void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
+void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer, const vector <int> PlayersScore)
 {
     cout << que << "    ";
     for (auto i : s) cout << i << ' ';
@@ -144,6 +144,19 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
         cout << que << "    ";
         for (auto i : s) cout << i << ' ';
         cout << "\n";
+
+        bool PrintOfPlayersScore = true;
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '_') {
+                PrintOfPlayersScore = false;
+            }
+        }
+
+        if (PrintOfPlayersScore) {
+            wcout << L"Баланс игроков:        1 игрок         2 игрок         3 игрок\n";
+            cout << "                       " << PlayersScore[0] << "               " << PlayersScore[1] << "               " << PlayersScore[2] << "\n";
+        }
+
     }
 
 }
@@ -276,7 +289,7 @@ int main()
                     break;
 
                 case 13:
-                    PlusOnDrum(que, s, ans, CurPlayer);
+                    PlusOnDrum(que, s, ans, CurPlayer, PlayersScore);
                     break;
 
                 default:
@@ -286,20 +299,23 @@ int main()
 
 
         }
-
+        
+        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
         if (Questions.size() == 0) {
             wcout << L"Новые вопросы закончились. Игра закончилась.\n";
-            wcout << L"Нажмите SHIFT, чтобы выйти из приложения.\n";
+            wcout << L"Нажмите ESC, чтобы выйти из приложения.\n";
+            Sleep(1000);
             while (true)
-                if (GetAsyncKeyState(VK_SHIFT)) {
+                if (GetAsyncKeyState(VK_ESCAPE)) {
                     exit(false);
                 }
         }
         
         wcout << L"Выиграл " << CurPlayer + 1 << L"-й игрок. Баланс игрока " << PlayersScore[CurPlayer] << L" очков. Ура-ура-ура ...\n";
-        wcout << L"Если вы хотите начать новую игру нажмите TAB, иначе нажмите кнопку SHIFT, чтобы выйти из игры.\n";
+        wcout << L"Если вы хотите начать новую игру нажмите TAB, иначе нажмите кнопку ESC, чтобы выйти из игры.\n";
 
         FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+        Sleep(1000);
         ContinueGame = false;
         while (Questions.size() > 0)
             if (GetAsyncKeyState(VK_TAB)) {
@@ -307,7 +323,7 @@ int main()
                 Sleep(150);
                 break;
             }
-            else if (GetAsyncKeyState(VK_SHIFT)) {
+            else if (GetAsyncKeyState(VK_ESCAPE)) {
                 exit(false);
             }
 
