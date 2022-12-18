@@ -129,14 +129,13 @@ void PlusOnDrum(string& que, string& s, string& ans, int& CurPlayer)
 
     } while (true);
 
-    if (s[a - 1] != '_' || Letters[ans[a - 1] - 64]) {
+    if (s[a - 1] != '_' || Letters[ans[a - 1]] == true) {
         wcout << L"Вы, конечно, умный! Такая буква уже открыта.\n";
         CurPlayer = (CurPlayer + 1) % 3;
     }
     else {
         wcout << L"Открыть букву под номером " << a << "\n";
-        if (ans[a - 1] == int('Ё')) Letters[ans[a - 1] - 72] = true;
-        else Letters[ans[a - 1] - 64] = true;
+        Letters[ans[a - 1]] = true;
         for (int i = 0; i < ans.size(); i++) {
             if (ans[i] == ans[a - 1]) {
                 s[i] = ans[i];
@@ -169,20 +168,15 @@ void PointsOnDrum(string& que, string& s,
         if (u.size() > 1) continue;
         io = u[0];
 
-        if (int(io) >= -96 && int(io) <= -91) {
+        if (int(io) >= -32 && int(io) <= -1) {
             io = char(int(io) - 32);
         }
-        else if (int(io) == -15) {
-            io = char(int(io) - 1);
+        else if (int(io) == -72) {
+            io = char(int(io) - 16);
         }
-        else if (int(io) >= -90 && int(io) <= -81) {
-            io = char(int(io) - 32);
-        }
-        else if (int(io) >= -32 && int(io) <= -17) {
-            io = char(int(io) - 80);
-        }
+        
 
-    } while (('А' - 64 > io || io > 'Я' - 64) && int(io) - 72 != int('Ё'));
+    } while ((int('А') > int(io) || int(io) > int('Я')) && int(io) != int('Ё'));
 
     if (Letters[io]) {
         wcout << L"Вы, конечно, умный! Такая буква уже была.\n";
@@ -193,7 +187,7 @@ void PointsOnDrum(string& que, string& s,
         int k = 0;
         bool f = false;
         for (int i = 0; i < ans.size(); i++) {
-            if (ans[i] - 64 == io || ((ans[i] == int(io) - 72) && (int(io) - 72 == int('Ё')))) {
+            if (ans[i] == io || ((ans[i] == int(io)) && (int(io) == int('Ё')))) {
                 k++;
                 f = true;
                 s[i] = ans[i];
