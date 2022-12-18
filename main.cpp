@@ -232,11 +232,6 @@ int main()
     setlocale(LC_ALL, "Russian");
 
     vector <question> Questions = InputQuestionsFromTheTextFile();
-<<<<<<< HEAD
-    //question RoundQue;// = ChoosingRandomQuestion(Questions);
-    //string que = RoundQue.que, ans = RoundQue.ans;
-=======
->>>>>>> 2cf74df (Last)
     string s;
     vector <int> PlayersScore(3, 0);
     int CurPlayer = 0;
@@ -249,18 +244,9 @@ int main()
         system("cls");
         FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
         fill(PlayersScore.begin(), PlayersScore.end(), 0);
-
-<<<<<<< HEAD
-
-        question RoundQue = ChoosingRandomQuestion(Questions);
-
-        string que = RoundQue.que;
-
-        string ans = RoundQue.ans;
-=======
+        
         question RoundQue = ChoosingRandomQuestion(Questions);
         string que = RoundQue.que, ans = RoundQue.ans;
->>>>>>> 2cf74df (Last)
 
         CurPlayer = 0;
 
